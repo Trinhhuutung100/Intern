@@ -1,0 +1,215 @@
+{
+  "frames": {
+    "runningboy-0": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 280,
+        "h": 385
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 280,
+        "h": 385
+      },
+      "sourceSize": {
+        "w": 1400,
+        "h": 770
+      }
+    },
+    "runningboy-1": {
+      "frame": {
+        "x": 280,
+        "y": 0,
+        "w": 280,
+        "h": 385
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 280,
+        "y": 0,
+        "w": 280,
+        "h": 385
+      },
+      "sourceSize": {
+        "w": 1400,
+        "h": 770
+      }
+    },
+    "runningboy-2": {
+      "frame": {
+        "x": 560,
+        "y": 0,
+        "w": 280,
+        "h": 385
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 560,
+        "y": 0,
+        "w": 280,
+        "h": 385
+      },
+      "sourceSize": {
+        "w": 1400,
+        "h": 770
+      }
+    },
+    "runningboy-3": {
+      "frame": {
+        "x": 840,
+        "y": 0,
+        "w": 280,
+        "h": 385
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 840,
+        "y": 0,
+        "w": 280,
+        "h": 385
+      },
+      "sourceSize": {
+        "w": 1400,
+        "h": 770
+      }
+    },
+    "runningboy-4": {
+      "frame": {
+        "x": 1120,
+        "y": 0,
+        "w": 280,
+        "h": 385
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 1120,
+        "y": 0,
+        "w": 280,
+        "h": 385
+      },
+      "sourceSize": {
+        "w": 1400,
+        "h": 770
+      }
+    },
+    "runningboy-5": {
+      "frame": {
+        "x": 0,
+        "y": 385,
+        "w": 280,
+        "h": 385
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 385,
+        "w": 280,
+        "h": 385
+      },
+      "sourceSize": {
+        "w": 1400,
+        "h": 770
+      }
+    },
+    "runningboy-6": {
+      "frame": {
+        "x": 280,
+        "y": 385,
+        "w": 280,
+        "h": 385
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 280,
+        "y": 385,
+        "w": 280,
+        "h": 385
+      },
+      "sourceSize": {
+        "w": 1400,
+        "h": 770
+      }
+    },
+    "runningboy-7": {
+      "frame": {
+        "x": 560,
+        "y": 385,
+        "w": 280,
+        "h": 385
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 560,
+        "y": 385,
+        "w": 280,
+        "h": 385
+      },
+      "sourceSize": {
+        "w": 1400,
+        "h": 770
+      }
+    },
+    "runningboy-8": {
+      "frame": {
+        "x": 840,
+        "y": 385,
+        "w": 280,
+        "h": 385
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 840,
+        "y": 385,
+        "w": 280,
+        "h": 385
+      },
+      "sourceSize": {
+        "w": 1400,
+        "h": 770
+      }
+    },
+    "runningboy-9": {
+      "frame": {
+        "x": 1120,
+        "y": 385,
+        "w": 280,
+        "h": 385
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 1120,
+        "y": 385,
+        "w": 280,
+        "h": 385
+      },
+      "sourceSize": {
+        "w": 1400,
+        "h": 770
+      }
+    }
+  },
+  "meta": {
+    "app": "sprite-sheet-to-json",
+    "version": "1.0.0",
+    "image": "../images/animated_sprite.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 1400,
+      "h": 770
+    },
+    "scale": "1"
+  }
+}

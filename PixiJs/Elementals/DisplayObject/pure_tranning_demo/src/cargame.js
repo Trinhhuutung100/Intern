@@ -1,4 +1,4 @@
-import { AnimatedSprite, Application, Container, Graphics, Sprite, Texture, Ticker, Text } from "pixi.js"
+import { AnimatedSprite, Application, Container, Graphics, Sprite, Texture, Ticker, Text, TilingSprite } from "pixi.js"
 import { Sound } from "@pixi/sound";
 
 export class Car extends Container{
@@ -23,7 +23,8 @@ export class Car extends Container{
         window.addEventListener("keydown", this.controller.bind(this));
         window.addEventListener("keyup", this.controller.bind(this));
         this.keys = {};
-        this.movespeed = 20;
+        this.movespeed = 10;
+        this.acceleration = 0;
     }
     controller(e){
         if(e.type == "keydown"){
@@ -33,6 +34,9 @@ export class Car extends Container{
         if(e.type == "keyup"){
             this.keys[e.keyCode] = false;
             this.racingSound.stop();
+            if(e.keyCode === 17) {
+                Background.smoveSpeed = Background.defaulSpeed;
+                this.acceleration = 0;}
             //console.log("keyup");
         }
         if(this.isDead == false){
@@ -65,10 +69,20 @@ export class Car extends Container{
                     this.bullets.push(bullet);
                     this.addChild(this.bullets[this.bullets.length-1]);
                     this.bulletTimer = 20;
+                }                       
+            } 
+            if(this.keys[17]){
+                this.acceleration++;
+                if(this.acceleration>25) this.acceleration = 25;
+                this.racingSound.play();
+                this.car.x +=this.movespeed+this.acceleration;
+                if(this.car.x+this.movespeed+this.acceleration>(innerWidth-this.car.width)/2){
+                    Background.smoveSpeed++;
+                    if(Background.smoveSpeed > Background.defaulSpeed+10) Background.smoveSpeed = Background.defaulSpeed+10;
+                    this.car.x = (innerWidth-this.car.width)/2;
                 }
-    
-    
-            }          
+            
+            }         
         }
 
     }
@@ -97,11 +111,11 @@ export class Enemy extends Container{
         this.addChild(this.enemy);
         this.enemy.x = innerWidth;
         this.enemy.y = innerHeight*(0.56 + 0.4*Math.random());
-        this.movespeed = 5;
         Ticker.shared.add(this.move.bind(this));
 
     }
     move(){
+        this.movespeed = Background.smoveSpeed+4;
         this.enemy.x -= this.movespeed;
         if(this.enemy.x < -innerWidth/2){
             this.removeChild(this.enemy);
@@ -127,11 +141,11 @@ export class Award extends Container{
         this.award.scale.set(0.3, 0.3);
         this.award.x = innerWidth;
         this.award.y = innerHeight*(0.56 + 0.4*Math.random());
-        this.movespeed = 2;
         Ticker.shared.add(this.move.bind(this));
         this.bigStar = false;
     }
     move(){
+        this.movespeed = Background.smoveSpeed;
         this.award.x -=this.movespeed;
         if(this.award.x< - innerWidth/2) {
             this.removeChild(this.award);
@@ -141,39 +155,30 @@ export class Award extends Container{
 
 }
 export class Background extends Container{
+    static defaulSpeed = 4;
+    static smoveSpeed = Background.defaulSpeed;
     constructor(){
         super();
-        this.background1 = Sprite.from("assets/images/background.jpg");
-        this.background1.width = innerWidth+5,
-        this.background1.height = innerHeight;
-        this.addChild(this.background1);
-        this.background2 = Sprite.from("assets/images/background.jpg");
-        this.background2.width = innerWidth+5,
-        this.background2.height = innerHeight;
-        this.background2.x = innerWidth+5;
-        this.addChild(this.background2);
-        this.movespeed = 2;
+        var background1 = Texture.from("assets/images/cat.png");        
         Ticker.shared.add(this.move.bind(this));
         this.backgroundSound = Sound.from("assets/sounds/background.mp3");
+        this.background3 = new TilingSprite(background1, 2*innerWidth, innerHeight);
+        this.addChild(this.background3);
     }
     move(){
+        this.movespeed = Background.smoveSpeed;
         if(this.backgroundSound.isPlaying == false) {
             this.backgroundSound.volume = 0.5;
             this.backgroundSound.play();
             this.backgroundSound.loop = true;
             
         }
-        this.background1.x -= this.movespeed;
-        if(this.background1.x< -innerWidth) {
-            this.background1.x = innerWidth;
-        }
-        this.background2.x -= this.movespeed;
-        if(this.background2.x< -innerWidth) {
-            this.background2.x = innerWidth;
+        this.background3.x -= this.movespeed;
+        if(this.background3.x - 2.5*this.movespeed  < -innerWidth) {
+            this.background3.x = 0;
         }
     }
 }
-
 export class Program{
     static init(){
         const app = new Application({
@@ -196,17 +201,12 @@ export class Program{
         this.car = new Car();
         this.car.init();
         app.stage.addChild(this.car);
-        app.ticker.add(this.randomObject.bind(this));
-        this.ec = 100;
-        this.ac = 300;
+        this.ec = 50*Background.smoveSpeed;
+        this.ac = 150*Background.smoveSpeed;
         this.eCounter = this.ec;
         this.aCounter = this.ac;
         this.enemies = [];
         this.awards = [];
-        app.ticker.add(this.bombCar.bind(this));
-        app.ticker.add(this.starCar.bind(this));
-        app.ticker.add(this.bombBullet.bind(this));
-        app.ticker.add(this.starBullet.bind(this));
         this.score = 0;
         this.lives = 3;
         this.sText = new Text("Score: 0");
@@ -223,9 +223,19 @@ export class Program{
         this.starSound = Sound.from("assets/sounds/star.mp3");
         this.starSound.volume = 1000000;
         this.addLife = 0;
+        app.ticker.add(this.update.bind(this));
         
     }
-    static randomObject(){
+    static update(){
+        this.randomObject();
+        this.bombCar();
+        this.bombBullet();
+        this.starCar();
+        this.starBullet();
+    }
+    static randomObject(){        
+        this.ec = 200/Background.smoveSpeed;
+        this.ac = 600/Background.smoveSpeed;
         this.eCounter--;
         this.aCounter--;  
 
@@ -269,7 +279,7 @@ export class Program{
                     this.bombSound.play();
                     console.log("va cham bom");
                     enemy.removeChildren();
-                    this.lives--;
+                    //this.lives--;
                     //console.log(this.lives);
                     this.app.stage.removeChild(this.lText);
                     this.lText =  new Text("Lives: " + this.lives);
@@ -363,7 +373,6 @@ export class Program{
         }
     }
 }
-
 window.onload = function(){
     Program.init();
 }
